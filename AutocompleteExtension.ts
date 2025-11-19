@@ -1,4 +1,4 @@
-import { Extension, StateField, StateEffect, EditorState } from '@codemirror/state';
+import { Extension, StateField, StateEffect, EditorState, Prec } from '@codemirror/state';
 import { EditorView, Decoration, DecorationSet, ViewUpdate, ViewPlugin, WidgetType, keymap } from '@codemirror/view';
 import { GeminiService } from './GeminiService';
 
@@ -94,7 +94,18 @@ export function createAutocompleteExtension(
         update(update: ViewUpdate) {
             if (!enabled()) return;
 
-            // Only trigger on document changes
+            // Clear suggestion if cursor/selection changed without document change
+            if (update.selectionSet && !update.docChanged) {
+                const hasSuggestion = update.state.field(suggestionTextField) !== null;
+                if (hasSuggestion) {
+                    this.view.dispatch({
+                        effects: setSuggestionEffect.of(null)
+                    });
+                }
+                return;
+            }
+
+            // Clear suggestion on any document change (user is typing or deleting)
             if (update.docChanged) {
                 // Cancel any pending request
                 if (abortController) {
@@ -102,8 +113,13 @@ export function createAutocompleteExtension(
                     abortController = null;
                 }
 
-                // The suggestion will be cleared automatically by the state field's map()
-                // when the document changes, so we don't need to dispatch here
+                // Clear existing suggestion
+                const hasSuggestion = update.state.field(suggestionTextField) !== null;
+                if (hasSuggestion) {
+                    this.view.dispatch({
+                        effects: setSuggestionEffect.of(null)
+                    });
+                }
 
                 // Schedule new request
                 const cursorPos = update.state.selection.main.head;
@@ -191,7 +207,7 @@ COMPLETION:`;
         }
     });
 
-    // Keymap to accept suggestion with Tab
+    // Keymap to accept suggestion with Tab and dismiss with Escape
     const acceptKeybinding = keymap.of([
         {
             key: 'Tab',
@@ -209,8 +225,22 @@ COMPLETION:`;
 
                 return true; // Prevent default Tab behavior
             }
+        },
+        {
+            key: 'Escape',
+            run: (view: EditorView) => {
+                const suggestion = view.state.field(suggestionTextField);
+                if (!suggestion) return false;
+
+                // Clear the suggestion
+                view.dispatch({
+                    effects: setSuggestionEffect.of(null)
+                });
+
+                return true; // Prevent default Escape behavior
+            }
         }
     ]);
 
-    return [suggestionTextField, suggestionField, autocompletePlugin, acceptKeybinding];
+    return [suggestionTextField, suggestionField, autocompletePlugin, Prec.high(acceptKeybinding)];
 }

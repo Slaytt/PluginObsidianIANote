@@ -1582,10 +1582,25 @@ function createAutocompleteExtension(service, enabled, delay) {
     update(update) {
       if (!enabled())
         return;
+      if (update.selectionSet && !update.docChanged) {
+        const hasSuggestion = update.state.field(suggestionTextField) !== null;
+        if (hasSuggestion) {
+          this.view.dispatch({
+            effects: setSuggestionEffect.of(null)
+          });
+        }
+        return;
+      }
       if (update.docChanged) {
         if (abortController) {
           abortController.abort();
           abortController = null;
+        }
+        const hasSuggestion = update.state.field(suggestionTextField) !== null;
+        if (hasSuggestion) {
+          this.view.dispatch({
+            effects: setSuggestionEffect.of(null)
+          });
         }
         const cursorPos = update.state.selection.main.head;
         this.scheduleRequest(cursorPos);
@@ -1666,9 +1681,21 @@ COMPLETION:`;
         });
         return true;
       }
+    },
+    {
+      key: "Escape",
+      run: (view) => {
+        const suggestion = view.state.field(suggestionTextField);
+        if (!suggestion)
+          return false;
+        view.dispatch({
+          effects: setSuggestionEffect.of(null)
+        });
+        return true;
+      }
     }
   ]);
-  return [suggestionTextField, suggestionField, autocompletePlugin, acceptKeybinding];
+  return [suggestionTextField, suggestionField, autocompletePlugin, import_state.Prec.high(acceptKeybinding)];
 }
 
 // main.ts
