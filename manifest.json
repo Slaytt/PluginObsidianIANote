@@ -1,0 +1,10 @@
+{
+    "id": "obsidian-gemini-assistant",
+    "name": "Gemini Assistant",
+    "version": "2.0.4",
+    "minAppVersion": "0.15.0",
+    "description": "Un assistant Gemini intégré à Obsidian pour améliorer la prise de note.",
+    "author": "Slayt",
+    "authorUrl": "",
+    "isDesktopOnly": false
+}

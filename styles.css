@@ -1,0 +1,183 @@
+/* Styles pour le plugin Gemini Assistant */
+
+.gemini-view-container {
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-secondary);
+}
+
+.gemini-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Message Bubbles */
+.gemini-message {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    position: relative;
+    animation: fadeIn 0.3s ease-out;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* User Message */
+.gemini-message.is-user {
+    align-self: flex-end;
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border-bottom-right-radius: 2px;
+}
+
+.gemini-message.is-user .message-header {
+    display: none;
+    /* Hide "User" label for cleaner look */
+}
+
+/* Bot Message */
+.gemini-message.is-bot {
+    align-self: flex-start;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-bottom-left-radius: 2px;
+}
+
+.gemini-message.is-bot .message-header {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* System Message */
+.gemini-message.is-system {
+    align-self: center;
+    background-color: transparent;
+    color: var(--text-muted);
+    font-size: 0.85em;
+    text-align: center;
+    max-width: 90%;
+    padding: 5px;
+    border: 1px dashed var(--background-modifier-border);
+}
+
+.gemini-message.is-system .message-header {
+    display: none;
+}
+
+/* Markdown Content Styling within Bubbles */
+.gemini-message .message-content p {
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+}
+
+.gemini-message .message-content p:first-child {
+    margin-top: 0;
+}
+
+.gemini-message .message-content p:last-child {
+    margin-bottom: 0;
+}
+
+.gemini-message.is-user .message-content {
+    color: var(--text-on-accent);
+}
+
+/* Input Area */
+.gemini-input-area {
+    padding: 15px;
+    background-color: var(--background-secondary);
+    border-top: 1px solid var(--background-modifier-border);
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.gemini-input-area textarea {
+    flex-grow: 1;
+    background-color: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    padding: 10px;
+    font-family: inherit;
+    line-height: 1.4;
+    transition: border-color 0.2s;
+}
+
+.gemini-input-area textarea:focus {
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+}
+
+.gemini-input-area button {
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Actions (Save Button) */
+.message-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid var(--background-modifier-border);
+    padding-top: 8px;
+}
+
+.message-actions button {
+    font-size: 0.8em;
+    padding: 4px 12px;
+    height: auto;
+}
+
+/* Loader */
+.gemini-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.gemini-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--background-modifier-border);
+    border-top: 2px solid var(--interactive-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
