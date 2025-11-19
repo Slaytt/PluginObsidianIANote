@@ -1,6 +1,6 @@
 import { ItemView, WorkspaceLeaf, Notice, MarkdownView, MarkdownRenderer, Component } from 'obsidian';
-import GeminiPlugin from './main';
-import { GeminiService } from './GeminiService';
+import GeminiPlugin from '../core/main';
+import { GeminiService } from '../services/GeminiService';
 
 export const VIEW_TYPE_GEMINI = 'gemini-view';
 

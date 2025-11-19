@@ -1,6 +1,6 @@
 import { Extension, StateField, StateEffect, EditorState, Prec } from '@codemirror/state';
 import { EditorView, Decoration, DecorationSet, ViewUpdate, ViewPlugin, WidgetType, keymap } from '@codemirror/view';
-import { GeminiService } from './GeminiService';
+import { GeminiService } from '../services/GeminiService';
 
 // State effect to set a suggestion
 const setSuggestionEffect = StateEffect.define<{ text: string; from: number } | null>();

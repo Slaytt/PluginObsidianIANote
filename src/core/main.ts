@@ -1,10 +1,10 @@
-import { Plugin, WorkspaceLeaf, Notice, Editor, MarkdownView, TFile } from 'obsidian';
-import { GeminiView, VIEW_TYPE_GEMINI } from './GeminiView';
-import { GeminiSettingsTab } from './Settings';
-import { GeminiService } from './GeminiService';
-import { LinkSuggestionModal, LinkSuggestion } from './LinkSuggestionModal';
-import { AtomicNotesModal, AtomicNote } from './AtomicNotesModal';
-import { createAutocompleteExtension } from './AutocompleteExtension';
+import { Plugin, Editor, MarkdownView, Notice, TFile, WorkspaceLeaf } from 'obsidian';
+import { GeminiView, VIEW_TYPE_GEMINI } from '../views/GeminiView';
+import { GeminiSettingsTab } from '../settings/Settings';
+import { GeminiService } from '../services/GeminiService';
+import { LinkSuggestionModal, LinkSuggestion } from '../modals/LinkSuggestionModal';
+import { AtomicNotesModal, AtomicNote } from '../modals/AtomicNotesModal';
+import { createAutocompleteExtension } from '../extensions/AutocompleteExtension';
 
 interface GeminiPluginSettings {
     apiKey: string;

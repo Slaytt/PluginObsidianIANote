@@ -7,6 +7,7 @@ var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
@@ -20,8 +21,12 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var __publicField = (obj, key, value) => {
+  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  return value;
+};
 
-// main.ts
+// src/core/main.ts
 var main_exports = {};
 __export(main_exports, {
   default: () => GeminiPlugin
@@ -29,12 +34,14 @@ __export(main_exports, {
 module.exports = __toCommonJS(main_exports);
 var import_obsidian5 = require("obsidian");
 
-// GeminiView.ts
+// src/views/GeminiView.ts
 var import_obsidian = require("obsidian");
 var VIEW_TYPE_GEMINI = "gemini-view";
 var GeminiView = class extends import_obsidian.ItemView {
   constructor(leaf, service, plugin) {
     super(leaf);
+    __publicField(this, "service");
+    __publicField(this, "plugin");
     this.service = service;
     this.plugin = plugin;
   }
@@ -312,11 +319,12 @@ ${JSON.stringify(noteTitles)}
   }
 };
 
-// Settings.ts
+// src/settings/Settings.ts
 var import_obsidian2 = require("obsidian");
 var GeminiSettingsTab = class extends import_obsidian2.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
+    __publicField(this, "plugin");
     this.plugin = plugin;
   }
   display() {
@@ -1358,9 +1366,12 @@ var GoogleGenerativeAI = class {
   }
 };
 
-// GeminiService.ts
+// src/services/GeminiService.ts
 var GeminiService = class {
   constructor(apiKey) {
+    __publicField(this, "genAI");
+    __publicField(this, "model");
+    __publicField(this, "apiKey");
     this.apiKey = apiKey;
     this.init();
   }
@@ -1409,11 +1420,15 @@ var GeminiService = class {
   }
 };
 
-// LinkSuggestionModal.ts
+// src/modals/LinkSuggestionModal.ts
 var import_obsidian3 = require("obsidian");
 var LinkSuggestionModal = class extends import_obsidian3.Modal {
   constructor(app, suggestions, onSubmit) {
     super(app);
+    __publicField(this, "suggestions");
+    __publicField(this, "selectedSuggestions");
+    // Indices of selected suggestions
+    __publicField(this, "onSubmit");
     this.suggestions = suggestions;
     this.onSubmit = onSubmit;
     this.selectedSuggestions = new Set(suggestions.map((_, i) => i));
@@ -1447,11 +1462,15 @@ var LinkSuggestionModal = class extends import_obsidian3.Modal {
   }
 };
 
-// AtomicNotesModal.ts
+// src/modals/AtomicNotesModal.ts
 var import_obsidian4 = require("obsidian");
 var AtomicNotesModal = class extends import_obsidian4.Modal {
   constructor(app, notes, onSubmit) {
     super(app);
+    __publicField(this, "notes");
+    __publicField(this, "selectedNotes");
+    __publicField(this, "onSubmit");
+    __publicField(this, "createMOC");
     this.notes = notes;
     this.onSubmit = onSubmit;
     this.selectedNotes = new Set(notes.map((_, i) => i));
@@ -1509,7 +1528,7 @@ var AtomicNotesModal = class extends import_obsidian4.Modal {
   }
 };
 
-// AutocompleteExtension.ts
+// src/extensions/AutocompleteExtension.ts
 var import_state = require("@codemirror/state");
 var import_view = require("@codemirror/view");
 var setSuggestionEffect = import_state.StateEffect.define();
@@ -1576,6 +1595,8 @@ function createAutocompleteExtension(service, enabled, delay) {
   let lastRequestPos = -1;
   const autocompletePlugin = import_view.ViewPlugin.fromClass(class {
     constructor(view) {
+      __publicField(this, "view");
+      __publicField(this, "scheduleRequest");
       this.view = view;
       this.scheduleRequest = debounce(this.requestCompletion.bind(this), delay());
     }
@@ -1698,7 +1719,7 @@ COMPLETION:`;
   return [suggestionTextField, suggestionField, autocompletePlugin, import_state.Prec.high(acceptKeybinding)];
 }
 
-// main.ts
+// src/core/main.ts
 var DEFAULT_SETTINGS = {
   apiKey: "default",
   noteTemplate: `### metadata :
@@ -1721,6 +1742,11 @@ Provide detailed, comprehensive, and precise responses. Use Markdown formatting.
   autocompleteDelay: 600
 };
 var GeminiPlugin = class extends import_obsidian5.Plugin {
+  constructor() {
+    super(...arguments);
+    __publicField(this, "settings");
+    __publicField(this, "service");
+  }
   async onload() {
     await this.loadSettings();
     this.service = new GeminiService(this.settings.apiKey);
