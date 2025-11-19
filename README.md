@@ -4,6 +4,43 @@
 
 [![Version](https://img.shields.io/badge/version-2.0.6-blue.svg)](https://github.com/Slaytt/PluginObsidianIANote)
 
+
+## 🚀 Installation
+
+### Prerequisites
+- Obsidian v0.15.0 or higher
+- [Google Gemini API Key](https://makersuite.google.com/app/apikey)
+
+### Steps
+
+1. **Download the plugin**:
+   - Clone or download this repository
+   - Or install via Obsidian Community Plugins (when published)
+
+2. **Build the plugin**:
+   ```bash
+   npm install
+   npm run build
+   ```
+
+3. **Install in Obsidian**:
+   - Copy `main.js`, `manifest.json`, and `styles.css` to:
+     ```
+     <your-vault>/.obsidian/plugins/obsidian-gemini-assistant/
+     ```
+   - Restart Obsidian or reload plugins
+
+4. **Enable the plugin**:
+   - Settings → Community Plugins → Enable "Gemini Assistant"
+
+## ⚙️ Configuration
+
+### Required Settings
+
+**Gemini API Key**
+- Get your free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+- Paste it in Settings → Gemini Assistant → API Key
+
 ## ✨ Features
 
 ### 🤖 Ghost Text Autocomplete
@@ -69,41 +106,6 @@
 - "Save as Note" button with customizable template
 - Scrollable history
 
-## 🚀 Installation
-
-### Prerequisites
-- Obsidian v0.15.0 or higher
-- [Google Gemini API Key](https://makersuite.google.com/app/apikey)
-
-### Steps
-
-1. **Download the plugin**:
-   - Clone or download this repository
-   - Or install via Obsidian Community Plugins (when published)
-
-2. **Build the plugin**:
-   ```bash
-   npm install
-   npm run build
-   ```
-
-3. **Install in Obsidian**:
-   - Copy `main.js`, `manifest.json`, and `styles.css` to:
-     ```
-     <your-vault>/.obsidian/plugins/obsidian-gemini-assistant/
-     ```
-   - Restart Obsidian or reload plugins
-
-4. **Enable the plugin**:
-   - Settings → Community Plugins → Enable "Gemini Assistant"
-
-## ⚙️ Configuration
-
-### Required Settings
-
-**Gemini API Key**
-- Get your free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
-- Paste it in Settings → Gemini Assistant → API Key
 
 ### Optional Settings
 
@@ -316,10 +318,6 @@ npm run build
 2. Disable autocomplete temporarily
 3. Check Google API quota limits
 
-## 📄 License
-
-MIT License - See [LICENSE](LICENSE) file for details
-
 ## 🙏 Acknowledgments
 
 - [Obsidian](https://obsidian.md) - The amazing knowledge base platform
@@ -328,8 +326,8 @@ MIT License - See [LICENSE](LICENSE) file for details
 
 ## 📬 Contact
 
-- GitHub Issues: [Report a bug](https://github.com/yourusername/obsidian-gemini-assistant/issues)
-- Discussions: [Join the discussion](https://github.com/yourusername/obsidian-gemini-assistant/discussions)
+- GitHub Issues: [Report a bug](https://github.com/Slaytt/PluginObsidianIANote/issues)
+- Discussions: [Join the discussion](https://github.com/Slaytt/PluginObsidianIANote/discussions)
 
 ---
 
